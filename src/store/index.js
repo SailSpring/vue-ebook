@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import book from './modules/book'
 // eslint-disable-next-line no-unused-vars
 import getters from './getters'
+import actions from './actions'
 
 Vue.use(Vuex)
 
@@ -10,5 +11,6 @@ export default new Vuex.Store({
   modules: {
     book
   },
-  getters
+  getters,
+  actions
 })
