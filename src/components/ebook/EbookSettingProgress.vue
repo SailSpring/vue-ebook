@@ -37,20 +37,6 @@
   export default {
     name: 'EbookSettingProgress',
     mixins: [ebookMixin],
-    computed: {
-      // eslint-disable-next-line vue/return-in-computed-property
-      getSectionName() {
-        // 只能获取一级目录
-        // if (this.section) {
-        //   const sectionInfo = this.currentBook.section(this.section)
-        //   if (sectionInfo && sectionInfo.href && this.currentBook && this.currentBook.navigation) {
-        //     // 获取当前目录
-        //     return this.currentBook.navigation.get(sectionInfo.href).label
-        //   }
-        // }
-        return this.section ? this.navigation[this.section].label : ''
-      }
-    },
     methods: {
       onProgressChange(progress) {
         this.setProgress(progress).then(() => {

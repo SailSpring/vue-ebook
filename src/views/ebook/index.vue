@@ -1,10 +1,12 @@
 <template>
 <!-- ref="ebook"方便获取dom，改变top值 -->
     <div class="ebook" ref="ebook">
+      <ebook-header></ebook-header>
       <ebook-reader></ebook-reader>
       <ebook-title></ebook-title>
       <ebook-menu></ebook-menu>
       <ebook-bookmark></ebook-bookmark>
+      <ebook-footer></ebook-footer>
     </div>
 </template>
 
@@ -13,6 +15,8 @@
   import EbookTitle from '../../components/ebook/EbookTitle'
   import EbookMenu from '../../components/ebook/EbookMenu'
   import EbookBookmark from '../../components/ebook/EbookBookmark'
+  import EbookHeader from '../../components/ebook/EbookHeader'
+  import EbookFooter from '../../components/ebook/EbookFooter'
   import { getReadTime, saveReadTime } from '../../utils/localStorage'
   import { ebookMixin } from '../../utils/mixin'
 
@@ -24,7 +28,9 @@
       // eslint-disable-next-line vue/no-unused-components
       EbookTitle,
       EbookMenu,
-      EbookBookmark
+      EbookBookmark,
+      EbookHeader,
+      EbookFooter
     },
     // 通过watch事件来监听offsetY的值(在EbookReader组件中)来改变top实现下拉,v代表新的值
     watch: {

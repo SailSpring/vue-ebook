@@ -27,6 +27,17 @@ export const ebookMixin = {
     ]),
     themeList() {
       return themeList(this)
+    },
+    getSectionName() {
+      // 只能获取一级目录
+      // if (this.section) {
+      //   const sectionInfo = this.currentBook.section(this.section)
+      //   if (sectionInfo && sectionInfo.href && this.currentBook && this.currentBook.navigation) {
+      //     // 获取当前目录
+      //     return this.currentBook.navigation.get(sectionInfo.href).label
+      //   }
+      // }
+      return this.section ? this.navigation[this.section].label : ''
     }
   },
   methods: {
@@ -80,7 +91,7 @@ export const ebookMixin = {
         this.setSection(currentLocation.start.index)
         saveLocation(this.fileName, startCfi)
         const bookmark = getBookmark(this.fileName)
-        console.log(bookmark)
+        // console.log(bookmark)
         if (bookmark) {
           if (bookmark.some(item => item.cfi === startCfi)) {
             this.setIsBookmark(true)
@@ -89,6 +100,17 @@ export const ebookMixin = {
           }
         } else {
           this.setIsBookmark(false)
+        }
+        if (this.pagelist) {
+          const totalPage = this.pagelist.length
+          const currentPage = currentLocation.start.location
+          if (currentPage && currentPage > 0) {
+            this.setPaginate(currentPage + '/' + totalPage)
+          } else {
+            this.setPaginate('')
+          }
+        } else {
+          this.setPaginate('')
         }
       }
     },
