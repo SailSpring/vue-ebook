@@ -18,6 +18,14 @@ export function clearLocalStorage() {
   return localStorage.clear()
 }
 
+export function saveBookShelf (shelf) {
+  return setLocalStorage('shelf', shelf)
+}
+
+export function getBookShelf () {
+  return getLocalStorage('shelf')
+}
+
 export function setBookObject(fileName, key, value) {
   let book = getLocalStorage(`${fileName}-info`)
   if (!book) {

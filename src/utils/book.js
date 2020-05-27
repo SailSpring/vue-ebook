@@ -109,3 +109,43 @@ export function flatten(array) {
   // 去掉函数的大括号，系统会认为它是一个返回值
   return [].concat(...array.map(item => [].concat(item, ...flatten(item.subitems))))
 }
+
+// const BOOK_SHELF_KEY = 'bookShelf'
+//
+// export function addToShelf(book) {
+//   let bookList = getLocalStorage(BOOK_SHELF_KEY)
+//   bookList = clearAddFromBookList(bookList)
+//   book.type = 1
+//   bookList.push(book)
+//   bookList.forEach((item, index) => {
+//     item.id = index + 1
+//   })
+//   appendAddToBookList(bookList)
+//   setLocalStorage(BOOK_SHELF_KEY, bookList)
+// }
+//
+// export function appendAddToBookList(bookList) {
+//   bookList.push({
+//     cover: '',
+//     title: '',
+//     type: 3,
+//     id: Number.MAX_SAFE_INTEGER
+//   })
+// }
+//
+// export function clearAddFromBookList(bookList) {
+//   return bookList.filter(item => {
+//     return item.type !== 3
+//   })
+// }
+//
+// export function removeFromBookShelf(bookItem) {
+//   let bookList = getLocalStorage(BOOK_SHELF_KEY)
+//   bookList = bookList.filter(item => {
+//     if (item.itemList) {
+//       item.itemList = item.itemList.filter(subItem => subItem.fileName !== bookItem.fileName)
+//     }
+//     return item.fileName !== bookItem.fileName
+//   })
+//   setLocalStorage(BOOK_SHELF_KEY, bookList)
+// }

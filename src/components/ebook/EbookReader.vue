@@ -24,6 +24,7 @@
     getLocation
   } from '../../utils/localStorage'
   import { flatten } from '../../utils/book'
+  import { getLocalForage } from '../../utils/localForage'
 
   global.ePub = Epub
   export default {
@@ -225,8 +226,7 @@
           this.setNavigation(navItem)
         })
       },
-      initEpub() {
-        const url = process.env.VUE_APP_RES_URL + '/epub/' + this.fileName + '.epub'
+      initEpub(url) {
         // console.log(url)
         this.book = new Epub(url)
         this.setCurrentBook(this.book)
@@ -268,10 +268,26 @@
       }
     },
     mounted () {
-      this.setFileName(this.$route.params.fileName.split('|').join('/')).then(() => {
-        this.initEpub()
-        // 数字下面包含若干个对象
-        // console.log([0].concat(...[1, 2]))
+      // 能够优先判断缓存电子书是否存在，存在的时候调用缓存来进行阅读
+      const books = this.$route.params.fileName.split('|')
+      const fileName = books[1]
+      // 根据fileName这个key在indexedDB中看找是否存在,
+      getLocalForage(fileName, (err, blob) => {
+        // 没有报错，并且blob对象存在
+        if (!err && blob) {
+          // console.log('找到离线缓存电子书')
+          this.setFileName(books.join('/')).then(() => {
+            this.initEpub(blob)
+          })
+        } else {
+          // console.log('在线获取电子书')
+          this.setFileName(books.join('/')).then(() => {
+            const url = process.env.VUE_APP_RES_URL + '/epub/' + this.fileName + '.epub'
+            this.initEpub(url)
+            // 数字下面包含若干个对象
+            // console.log([0].concat(...[1, 2]))
+          })
+        }
       })
     }
   }
