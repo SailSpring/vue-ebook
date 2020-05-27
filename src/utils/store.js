@@ -1,5 +1,28 @@
-import { getLocalStorage } from './localStorage'
+import { getLocalStorage, getBookShelf, saveBookShelf } from './localStorage'
 
+export function addToShelf (book) {
+  // 先从书架中把书拿出来
+  // let shelfList = getLocalStorage('shelf')
+  let shelfList = getBookShelf()
+  // 把最后一本书去掉
+  shelfList = removeAndFromShelf(shelfList)
+  book.type = 1
+  shelfList.push(book)
+  shelfList = computedId(shelfList)
+  shelfList = appendAddToShelf(shelfList)
+  // setLocalStorage('shelf', shelfList)
+  saveBookShelf(shelfList)
+}
+export function removeFromBookShelf (book, bookList) {
+  if (!bookList) bookList = getBookShelf()
+  // let shelfList = getBookShelf()
+  return bookList.filter(item => {
+    if (item.itemList) {
+      item.itemList = removeFromBookShelf(book, item.itemList)
+    }
+    return item.fileName !== book.fileName
+  })
+}
 export function flatBookList(bookList) {
   if (bookList) {
     let orgBookList = bookList.filter(item => {
